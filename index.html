@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Will You Be My Valentine, Amena?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      background-color: #ffe6e9;
+      color: #d63384;
+      padding: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px #ffb3c1;
+    }
+
+    .question {
+      font-size: 20px;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      position: relative;
+      display: inline-block;
+    }
+
+    button {
+      font-size: 18px;
+      padding: 10px 20px;
+      margin: 15px;
+      border-radius: 20px;
+      border: 2px solid #d63384;
+      cursor: pointer;
+      transition: 0.3s;
+      position: relative;
+    }
+
+    #yesButton {
+      background-color: #ff85a2;
+      color: white;
+    }
+
+    #yesButton:hover {
+      background-color: #ff4d6d;
+    }
+
+    #noButton {
+      background-color: #ffc2d1;
+      color: white;
+      transition: transform 0.3s;
+    }
+
+    .celebration {
+      display: none;
+      font-size: 24px;
+      font-weight: bold;
+      color: #ff4d6d;
+      margin-top: 40px;
+      animation: pop 1s ease-out;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes balloon-float {
+      0% { transform: translateY(100vh); opacity: 0.8; }
+      100% { transform: translateY(-120vh); opacity: 0; }
+    }
+
+    @keyframes confetti-fall {
+      0% { transform: translateY(-10vh) rotateZ(0); }
+      100% { transform: translateY(100vh) rotateZ(360deg); }
+    }
+
+    .balloon {
+      position: fixed;
+      bottom: -100px;
+      width: 30px;
+      height: 50px;
+      background-color: #ff4d6d;
+      border-radius: 50%;
+      opacity: 0.7;
+      animation: balloon-float 5s linear infinite;
+    }
+
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background-color: #ff85a2;
+      opacity: 0.8;
+      animation: confetti-fall 4s linear infinite;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 28px;
+      }
+
+      .question {
+        font-size: 18px;
+      }
+
+      button {
+        font-size: 16px;
+        padding: 10px 15px;
+      }
+
+      .celebration {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>💖 Will You Be My Valentine, Amena? 💖</h1>
+  <p class="question">Please choose an answer:</p>
+
+  <div class="buttons">
+    <button id="yesButton">Yes</button>
+    <button id="noButton">No</button>
+  </div>
+
+  <div id="celebration" class="celebration">
+    🎉 See you tomorrow, my love! ❤️💐
+  </div>
+
+  <script>
+    const noButton = document.getElementById('noButton');
+    const yesButton = document.getElementById('yesButton');
+    const celebration = document.getElementById('celebration');
+
+    // Move "No" button around
+    noButton.addEventListener('mouseenter', moveButton);
+    noButton.addEventListener('touchstart', moveButton);
+
+    function moveButton() {
+      const x = Math.random() * (window.innerWidth - 100);
+      const y = Math.random() * (window.innerHeight - 150);
+      noButton.style.position = 'absolute';
+      noButton.style.left = `${x}px`;
+      noButton.style.top = `${y}px`;
+    }
+
+    // Show balloons, confetti, and message on "Yes"
+    yesButton.addEventListener('click', () => {
+      celebration.style.display = 'block';
+      yesButton.disabled = true;
+      noButton.style.display = 'none';
+      document.body.style.backgroundColor = '#ffccd5';
+
+      createBalloons();
+      createConfetti();
+    });
+
+    function createBalloons() {
+      for (let i = 0; i < 15; i++) {
+        const balloon = document.createElement('div');
+        balloon.classList.add('balloon');
+        balloon.style.left = `${Math.random() * 100}vw`;
+        balloon.style.backgroundColor = getRandomColor();
+        balloon.style.animationDuration = `${2 + Math.random() * 3}s`;
+        document.body.appendChild(balloon);
+        setTimeout(() => balloon.remove(), 5000);
+      }
+    }
+
+    function createConfetti() {
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = `${Math.random() * 100}vw`;
+        confetti.style.backgroundColor = getRandomColor();
+        confetti.style.animationDuration = `${2 + Math.random() * 2}s`;
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 4000);
+      }
+    }
+
+    function getRandomColor() {
+      const colors = ['#ff85a2', '#ff4d6d', '#ffccd5', '#d63384', '#ffb3c1'];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+  </script>
+
+</body>
+</html>
